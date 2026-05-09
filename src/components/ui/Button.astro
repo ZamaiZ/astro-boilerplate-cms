@@ -1,0 +1,66 @@
+---
+interface Props {
+  href: string;
+  variant?: "primary" | "ghost";
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = "primary", external, class: className } = Astro.props;
+---
+
+<a
+  class:list={["btn", variant === "ghost" && "btn--ghost", className]}
+  href={href}
+  {...external ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+>
+  <slot />
+</a>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.35rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .btn:not(.btn--ghost) {
+    background: var(--color-primary, oklch(0.55 0.2 260));
+    color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn:not(.btn--ghost):hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border-subtle, oklch(0.88 0.02 260));
+  }
+
+  .btn--ghost:hover {
+    background: var(--color-bg-subtle);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:not(.btn--ghost):hover {
+      transform: none;
+    }
+  }
+</style>

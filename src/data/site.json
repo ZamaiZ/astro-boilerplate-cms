@@ -1,0 +1,17 @@
+{
+  "company": {
+    "name": "Empresa Exemplo",
+    "category": "Ar Condicionado",
+    "city": "São Paulo",
+    "state": "SP",
+    "phone": "11999999999",
+    "whatsapp": "11999999999",
+    "description": "Descrição gerada pela IA ou texto de exemplo para desenvolvimento local.",
+    "services": ["Instalação", "Manutenção", "Limpeza"],
+    "primary_color": "#2563EB"
+  },
+  "domain": "exemplo.com.br",
+  "theme": {
+    "id": "institutional-v1"
+  }
+}

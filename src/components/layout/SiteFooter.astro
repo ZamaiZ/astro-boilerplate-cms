@@ -1,0 +1,91 @@
+---
+import type { Company } from "../../types/site";
+import { whatsappHref } from "../../lib/whatsapp";
+import Container from "../ui/Container.astro";
+
+interface Props {
+  company: Company;
+  domain: string;
+}
+
+const { company, domain } = Astro.props;
+const waLink = whatsappHref(company.whatsapp);
+const year = new Date().getFullYear();
+const telDigits = company.phone.replace(/\D/g, "");
+const telLink = telDigits ? `tel:+55${telDigits.replace(/^55/, "")}` : "#";
+---
+
+<footer class="site-footer">
+  <Container>
+    <div class="footer-grid">
+      <div>
+        <p class="brand">{company.name}</p>
+        <p class="fine">
+          {company.category} · {company.city}, {company.state}
+        </p>
+      </div>
+      <div class="links">
+        <a href={waLink} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        {telDigits ? <a href={telLink}>Telefone</a> : null}
+        <span class="fine">{domain}</span>
+      </div>
+    </div>
+    <p class="copyright">© {year} {company.name}. Todos os direitos reservados.</p>
+  </Container>
+</footer>
+
+<style>
+  .site-footer {
+    padding: var(--space-section-y) 0 calc(var(--space-section-y) * 0.75);
+    border-top: 1px solid var(--color-border-subtle, oklch(0.9 0.01 260));
+    background: var(--color-bg-subtle);
+  }
+
+  .footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .brand {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.2rem;
+    color: var(--color-text);
+  }
+
+  .fine {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.25rem;
+    align-items: center;
+  }
+
+  .links a {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .links a:hover {
+    text-decoration: underline;
+  }
+
+  .copyright {
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border-subtle, oklch(0.92 0.01 260));
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>

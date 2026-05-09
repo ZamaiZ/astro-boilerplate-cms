@@ -1,0 +1,98 @@
+---
+import type { Company } from "../../types/site";
+import Container from "../ui/Container.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props {
+  company: Company;
+}
+
+const { company } = Astro.props;
+---
+
+<section id="sobre" class="section about" aria-labelledby="sobre-heading">
+  <Container>
+    <div class="about-shell">
+      <SectionHeading
+        id="sobre-heading"
+        eyebrow="Presença local"
+        title={`Referência em ${company.city}`}
+        subtitle={`Atendimento consultivo e execução com foco em resultado. Estamos em ${company.city}, ${company.state}, com ${company.category.toLowerCase()} para quem busca qualidade e transparência.`}
+      />
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Cidade</span>
+          <span class="stat-value">{company.city}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Estado</span>
+          <span class="stat-value">{company.state}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Segmento</span>
+          <span class="stat-value">{company.category}</span>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .section {
+    padding: var(--space-section-y) 0;
+  }
+
+  .about {
+    background: linear-gradient(
+      180deg,
+      var(--color-bg-subtle) 0%,
+      var(--color-bg) 100%
+    );
+    border-block: 1px solid var(--color-border-subtle, oklch(0.93 0.01 260));
+  }
+
+  .about-shell {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .about-shell {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  .stat {
+    padding: 1.15rem 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    border: 1px solid var(--color-border-subtle, oklch(0.9 0.01 260));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+    font-family: var(--font-sans);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.2rem;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+</style>

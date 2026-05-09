@@ -1,0 +1,60 @@
+---
+import type { SiteData } from "../types/site";
+import "../styles/global.css";
+
+interface Props {
+  site: SiteData;
+}
+
+const { site } = Astro.props;
+const { company, domain } = site;
+const canonical = `https://${domain.replace(/^https?:\/\//, "").replace(/\/$/, "")}/`;
+const pageTitle = `${company.name} — ${company.category} em ${company.city}`;
+const description =
+  company.description?.slice(0, 160) ||
+  `${company.name} oferece ${company.category} em ${company.city}, ${company.state}.`;
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: company.name,
+  description: company.description,
+  url: canonical,
+  telephone: company.phone || undefined,
+  areaServed: {
+    "@type": "City",
+    name: company.city,
+    addressRegion: company.state,
+    addressCountry: "BR",
+  },
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="pt_BR" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <slot />
+  </body>
+</html>

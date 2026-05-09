@@ -1,0 +1,28 @@
+---
+import site from "../data/site.json";
+import type { SiteData } from "../types/site";
+import InstitutionalLayout from "../layouts/InstitutionalLayout.astro";
+import { cssVarsFromPrimary } from "../lib/palette";
+import SiteHeader from "../components/layout/SiteHeader.astro";
+import SiteFooter from "../components/layout/SiteFooter.astro";
+import HeroInstitutional from "../components/sections/HeroInstitutional.astro";
+import ServicesGrid from "../components/sections/ServicesGrid.astro";
+import AboutStrip from "../components/sections/AboutStrip.astro";
+import ContactCta from "../components/sections/ContactCta.astro";
+
+const data = site as SiteData;
+const primary = data.company.primary_color || "#2563eb";
+---
+
+<InstitutionalLayout site={data}>
+  <div id="site-root" style={cssVarsFromPrimary(primary)}>
+    <SiteHeader company={data.company} />
+    <main id="conteudo">
+      <HeroInstitutional company={data.company} />
+      <ServicesGrid company={data.company} />
+      <AboutStrip company={data.company} />
+      <ContactCta company={data.company} domain={data.domain} />
+    </main>
+    <SiteFooter company={data.company} domain={data.domain} />
+  </div>
+</InstitutionalLayout>
